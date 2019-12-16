@@ -22,10 +22,7 @@ class Main(QWidget):
 #시작할 때 점수 입력 초기화하는 작업 넣으려면 이거 코드 넣으면 됨.아래에 리셋버튼클릭
 #        self.btnResetClicked()
         self.drawGraph()
-        self.lblAverage.setText("평균 : " + str(0))
-        self.lblVariance.setText("표준편차 :" + str(0))
-
-
+                
     def initUI(self):
         self.setWindowTitle("성적산출프로그램")
         self.setGeometry(650, 200, 750, 550)
@@ -105,11 +102,11 @@ class Main(QWidget):
         self.ax.set_yticks(self.people)
         self.canvas = FigureCanvas(self.fig)
 
-        self.lblAverage = QLabel("평균 : "+ str(0))
+        self.lblAverage = QLabel("평균 : ")
         font = self.lblAverage.font()
         font.setPointSize(font.pointSize() + 3)
         self.lblAverage.setFont(font)
-        self.lblVariance = QLabel("표준편차 : "+ str(0))
+        self.lblVariance = QLabel("표준편차 : ")
         font = self.lblVariance.font()
         font.setPointSize(font.pointSize() + 3)
         self.lblVariance.setFont(font)
