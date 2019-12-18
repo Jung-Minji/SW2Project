@@ -502,11 +502,11 @@ class Main(QWidget):
         self.lblVariance.setText("표준편차 : " + str(self.lblVariance_sum(self.class_subject + self.class_subject2, lblAverage_result)))
         self.canvas.draw()
 
-    def comboClicked(self):
-        if self.checkBoxNow == True:
-            self.drawAllGraph()
-        else:
-            self.drawGraph()
+#     def comboClicked(self):
+#         if self.checkBoxNow == True:
+#             self.drawAllGraph()
+#         else:
+#             self.drawGraph()
 
 
 if __name__ == '__main__':
