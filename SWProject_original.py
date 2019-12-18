@@ -17,6 +17,7 @@ class Main(QWidget):
         self.class2_LA_score = []
         self.class_subject = []
         self.class_subject2 = []
+        self.checkBoxNow = False
 
         self.setData()
         self.initUI()
@@ -97,7 +98,7 @@ class Main(QWidget):
         self.txtGraphTitle.setFont(font)
         self.txtGraphTitle.setAlignment(Qt.AlignCenter)
         self.scores = [x for x in range(0, 100, 10)]
-        self.people = [x for x in range(0, 12, 1)]
+        self.people = [x for x in range(0, 12, 1) ]
         self.fig = plt.Figure()
         self.fig.set_size_inches(4.5, 4.5)
         self.ax = self.fig.add_subplot(111)
@@ -346,9 +347,9 @@ class Main(QWidget):
                 pass
 
         elif self.getSubKey() == "선형대수" and self.getClassKey() == "class1":
-            while 0 in self.class1_SW_score:
-                self.class1_SW_score.remove(0)
-            if len(self.class1_SW_score) != 0:
+            while 0 in self.class1_LA_score:
+                self.class1_LA_score.remove(0)
+            if len(self.class1_LA_score) != 0:
                 num_min = (min(self.class1_LA_score) // 10)
                 num_max = (max(self.class1_LA_score) // 10)
                 self.class_subject = self.class1_LA_score
@@ -438,9 +439,9 @@ class Main(QWidget):
                 pass
 
         elif self.getSubKey() == "선형대수" :
-            while 0 in self.class1_SW_score:
-                self.class1_SW_score.remove(0)
-            if len(self.class1_SW_score) != 0:
+            while 0 in self.class1_LA_score:
+                self.class1_LA_score.remove(0)
+            if len(self.class1_LA_score) != 0:
                 num_min = (min(self.class1_LA_score) // 10)
                 num_max = (max(self.class1_LA_score) // 10)
                 self.class_subject = self.class1_LA_score
