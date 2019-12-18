@@ -17,12 +17,9 @@ class Main(QWidget):
         self.class2_LA_score = []
         self.class_subject = []
         self.class_subject2 = []
-        self.checkBoxNow = False
 
         self.setData()
         self.initUI()
-        # 시작할 때 점수 입력 초기화하는 작업 넣으려면 이거 코드 넣으면 됨.아래에 리셋버튼클릭
-        #        self.btnResetClicked()
         self.drawGraph()
 
     def initUI(self):
@@ -46,6 +43,7 @@ class Main(QWidget):
         self.comboClass.currentTextChanged.connect(self.comboClicked)
         self.comboSubject.currentTextChanged.connect(self.comboClicked)
 
+
         self.btnInputScore = QPushButton("점수 입력하기")
         self.btnInputScore.clicked.connect(self.btnInputScoreClicked)
         self.btnReset = QPushButton("점수 초기화")
@@ -59,15 +57,11 @@ class Main(QWidget):
         font.setPointSize(font.pointSize() + 3)
         self.btnReset.setFont(font)
         self.btnReset.setFixedSize(200, 40)
-
-        # self.checkClass = QCheckBox("분반 별 그래프 보기")
-        # font = self.checkClass.font()
-        # font.setPointSize(font.pointSize() + 3)
-        # self.checkClass.setFont(font)
         self.checkAll = QCheckBox("모든 분반 그래프 보기")
         font = self.checkAll.font()
         font.setPointSize(font.pointSize() + 3)
         self.checkAll.setFont(font)
+        self.checkBoxNow = False    # 초기 combobox의 값 False로 설정
         self.checkAll.stateChanged.connect(self.checkBoxState)
 
 
@@ -85,8 +79,6 @@ class Main(QWidget):
         funcLayout.addSpacing(10)
         funcLayout.addWidget(self.btnReset)
         funcLayout.addSpacing(60)
-        # funcLayout.addWidget(self.checkClass)
-        # funcLayout.addSpacing(10)
         funcLayout.addWidget(self.checkAll)
         funcLayout.setContentsMargins(20, 50, 0, 50)  # layout margins(left, top, right, bottom)
 
@@ -98,7 +90,7 @@ class Main(QWidget):
         self.txtGraphTitle.setFont(font)
         self.txtGraphTitle.setAlignment(Qt.AlignCenter)
         self.scores = [x for x in range(0, 100, 10)]
-        self.people = [x for x in range(0, 12, 1) ]
+        self.people = [x for x in range(0, 12, 1)]
         self.fig = plt.Figure()
         self.fig.set_size_inches(4.5, 4.5)
         self.ax = self.fig.add_subplot(111)
@@ -114,8 +106,6 @@ class Main(QWidget):
         font = self.lblVariance.font()
         font.setPointSize(font.pointSize() + 3)
         self.lblVariance.setFont(font)
-        self.txtAverage = QLabel()
-        self.txtVariance = QLabel()
 
         graphLayout = QVBoxLayout()
         graphLayout.addWidget(self.txtGraphTitle)
@@ -125,9 +115,7 @@ class Main(QWidget):
 
         resultLayout = QHBoxLayout()
         resultLayout.addWidget(self.lblAverage)
-        resultLayout.addWidget(self.txtAverage)
         resultLayout.addWidget(self.lblVariance)
-        resultLayout.addWidget(self.txtVariance)
         resultLayout.setContentsMargins(50, 0, 0, 0)
         graphLayout.addLayout(resultLayout)
         graphLayout.setContentsMargins(0, 30, 20, 50)
@@ -198,7 +186,6 @@ class Main(QWidget):
 
     # clicked btnInputScore -> dialog
     def btnInputScoreClicked(self):
-
         self.data = []
         self.setScore()
         self.dlg = InputDialog(self.data)  # 매개변수 self.data : dialog에 입력했던 점수를 불러오기 위한 장치
@@ -230,9 +217,6 @@ class Main(QWidget):
 
         x = [10, 20, 30, 40, 50, 60, 70, 80, 90]
         y = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-        #        x1 = [40, 50, 60, 70, 80]
-        #        y1 = [4, 8, 2, 6, 1]
 
         self.fig.clear()
         ax = self.fig.add_subplot(111)
@@ -293,7 +277,6 @@ class Main(QWidget):
 
     # 각각의 파일에서 점수를 가져와서 다이얼로그 lineEdit에 점수 저장
     def setScore(self):
-
         if self.getSubKey() == "소프트웨어프로젝트2" and self.getClassKey() == "class1":
             if os.path.getsize('class1_SW_scoreDB.txt') > 0:
                 file = open('class1_SW_scoreDB.txt', 'rb')
@@ -324,11 +307,6 @@ class Main(QWidget):
                 self.data = []
 
     def drawGraph(self):
-
-
-
-
-
         num_min = 0
         num_max = 0
         num_scorelist = []
@@ -397,16 +375,11 @@ class Main(QWidget):
             x = [10, 20, 30, 40, 50, 60, 70, 80, 90]
             y = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        #        x1 = [40, 50, 60, 70, 80]
-        #        y1 = [4, 8, 2, 6, 1]
-
         self.fig.clear()
         ax = self.fig.add_subplot(111)
         ax.set_xticks(self.scores)
         ax.set_yticks(self.people)
         ax.plot(x, y, label=self.getClassKey(), marker='o')
-        #            ax.plot(x1, y1, label="class2", marker='o')
-
         ax.legend()  # 범례 표시
         self.lblAverage.setText("평균 : " + str(self.lblAverage_sum(self.class_subject)))
         lblAverage_result = self.lblAverage_sum(self.class_subject)
@@ -414,12 +387,7 @@ class Main(QWidget):
         self.lblVariance.setText("표준편차 : " + str(self.lblVariance_sum(self.class_subject, lblAverage_result)))
         self.canvas.draw()
 
-        #        self.class1_SW_score = []
-        #        self.class1_LA_score = []
-        #        self.class2_SW_score = []
-        #        self.class2_LA_score = []
     def drawAllGraph(self):
-
         num_min = 0
         num_max = 0
         num_scorelist = []
@@ -439,9 +407,9 @@ class Main(QWidget):
                 pass
 
         elif self.getSubKey() == "선형대수" :
-            while 0 in self.class1_LA_score:
-                self.class1_LA_score.remove(0)
-            if len(self.class1_LA_score) != 0:
+            while 0 in self.class1_SW_score:
+                self.class1_SW_score.remove(0)
+            if len(self.class1_SW_score) != 0:
                 num_min = (min(self.class1_LA_score) // 10)
                 num_max = (max(self.class1_LA_score) // 10)
                 self.class_subject = self.class1_LA_score
@@ -471,9 +439,6 @@ class Main(QWidget):
         if (len(y) == 1 and y[0] == 0):
             x = [10, 20, 30, 40, 50, 60, 70, 80, 90]
             y = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-        #        x1 = [40, 50, 60, 70, 80]
-        #        y1 = [4, 8, 2, 6, 1]
 
         num_min = 0
         num_max = 0
@@ -523,9 +488,6 @@ class Main(QWidget):
             x = [10, 20, 30, 40, 50, 60, 70, 80, 90]
             y = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        #        x1 = [40, 50, 60, 70, 80]
-        #        y1 = [4, 8, 2, 6, 1]
-
         self.fig.clear()
         ax = self.fig.add_subplot(111)
         ax.set_xticks(self.scores)
@@ -539,6 +501,12 @@ class Main(QWidget):
         print(self.class_subject + self.class_subject2)
         self.lblVariance.setText("표준편차 : " + str(self.lblVariance_sum(self.class_subject + self.class_subject2, lblAverage_result)))
         self.canvas.draw()
+
+    def comboClicked(self):
+        if self.checkBoxNow == True:
+            self.drawAllGraph()
+        else:
+            self.drawGraph()
 
 
 if __name__ == '__main__':
